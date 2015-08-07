@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "mocha -r tests/testhelper.js -R spec tests/backend/**/*.js",
-    "start": "npm server.js"
+    "start": "node server.js"
   },
   "repository": {
     "type": "git",
@@ -30,6 +30,7 @@
   },
   "devDependencies": {
     "chai": "^3.2.0",
+    "proxyquire": "^1.6.0",
     "sinon": "^1.15.4",
     "sinon-chai": "^2.8.0"
   }
