@@ -14,9 +14,10 @@ describe('Server', function() {
     beforeEach(function() {
         proxyquire = require('proxyquire');
         app = {
-            get: sinon.spy(),
+            get: sinon.stub().returns(3300),
             set: sinon.spy(),
-            listen: sinon.spy()
+            listen: sinon.spy(),
+            use: sinon.spy(),
         };
         expressStub = sinon.stub().returns(app);
         configStub = sinon.stub().returns(app);
@@ -25,6 +26,10 @@ describe('Server', function() {
 
     it('should bootstrap the app', function() {
         expect(expressStub).to.be.called;
+    });
+
+    it('should configure the app', function() {
+        expect(configStub).to.be.called;
     });
 
     it('should launch the app', function() {
