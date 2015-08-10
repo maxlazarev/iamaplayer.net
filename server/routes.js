@@ -1,3 +1,5 @@
+var paths = require('./paths');
+
 /**
  * Sets the routes
  *
@@ -8,12 +10,15 @@ module.exports.initialize = function(app) {
     /*
      * Pass routing to angular app
      */
-    app.get('*', function(req, res) {
-        res.sendFile('./public/index.html');
+    app.get('/admin', function(req, res) {
+        res.sendFile(global.DR + '/' + paths.admin.indexDist);
     });
 
     app.get('/admin/*', function(req, res) {
-        res.sendFile('./public/admin/index.html');
+        res.sendFile(global.DR + '/' + paths.admin.indexDist);
     });
 
+    app.get('*', function(req, res) {
+        res.sendFile(global.DR + '/' + paths.front.indexDist);
+    });
 };

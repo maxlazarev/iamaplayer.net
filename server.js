@@ -2,6 +2,8 @@ var express = require('express');
 var config  = require('./server/configure');
 var app;
 
+global.DR = __dirname;
+
 app = express();
 app = config(app);
 

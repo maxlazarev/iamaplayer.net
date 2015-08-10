@@ -17,7 +17,7 @@ describe('Server', function() {
             get: sinon.stub().returns(3300),
             set: sinon.spy(),
             listen: sinon.spy(),
-            use: sinon.spy(),
+            use: sinon.spy()
         };
         expressStub = sinon.stub().returns(app);
         configStub = sinon.stub().returns(app);
