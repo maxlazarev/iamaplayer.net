@@ -17,6 +17,6 @@ module.exports = function(app) {
     if ('development' === app.get('env')) {
         app.use(errorHandler());
     }
-
+    app.use(morgan('dev'));
     return app;
 };

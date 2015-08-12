@@ -1,6 +1,6 @@
 var app;
-var configure = require('../../../server/configure');
-var morgan = sinon.spy();
+var configure   = require('../../../server/configure');
+var morgan      = sinon.spy();
 
 describe('Server configs', function() {
 
@@ -36,14 +36,12 @@ describe('Server configs', function() {
 
     it('should use morgan', function() {
         app = {
-            get: sinon.spy(),
+            get: sinon.stub().returns('development'),
             set: sinon.spy(),
-            use: sinon.stub().returns(morgan('dev'))
+            use: sinon.spy()
         };
         configure(app);
-
-
-        expect(morgan).to.be.calledWith('dev');
+        expect(app.use.thirdCall).to.be.calledWith(sinon.match.func);
     });
 
 });
