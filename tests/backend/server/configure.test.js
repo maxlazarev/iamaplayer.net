@@ -41,7 +41,6 @@ describe('Server configs', function() {
             use: sinon.spy()
         };
         configure(app);
-        console.log(morgan('dev'));
         expect(app.use.firstCall).to.be.calledWith(sinon.match.func);
     });
 
