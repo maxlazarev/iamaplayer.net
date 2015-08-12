@@ -11,12 +11,12 @@ var morgan          = require('morgan');
  * @returns {*}
  */
 module.exports = function(app) {
+    app.use(morgan('dev'));
     app.set('port', process.env.PORT || 3300);
     app.use('/public', express.static(path.join(__dirname, '../public')));
     routes.initialize(app);
     if ('development' === app.get('env')) {
         app.use(errorHandler());
     }
-    app.use(morgan('dev'));
     return app;
 };

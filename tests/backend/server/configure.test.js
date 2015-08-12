@@ -31,7 +31,7 @@ describe('Server configs', function() {
             use: sinon.spy()
         };
         configure(app);
-        expect(app.use.secondCall).to.be.calledWith(sinon.match.func);
+        expect(app.use.thirdCall).to.be.calledWith(sinon.match.func);
     });
 
     it('should use morgan', function() {
@@ -41,7 +41,8 @@ describe('Server configs', function() {
             use: sinon.spy()
         };
         configure(app);
-        expect(app.use.thirdCall).to.be.calledWith(sinon.match.func);
+        console.log(morgan('dev'));
+        expect(app.use.firstCall).to.be.calledWith(sinon.match.func);
     });
 
 });
