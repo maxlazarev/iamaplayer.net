@@ -24,6 +24,7 @@
   },
   "homepage": "https://github.com/diedsmiling/iamaplayer.net#readme",
   "dependencies": {
+    "body-parser": "^1.13.3",
     "errorhandler": "^1.4.2",
     "express": "^4.13.3",
     "gulp": "^3.9.0",
@@ -32,7 +33,9 @@
     "gulp-rename": "^1.2.2",
     "gulp-template": "^3.0.0",
     "gulp-watch": "^4.3.4",
-    "mongoose": "^4.1.1",
+    "jsonwebtoken": "^5.0.4",
+    "mongoose": "^4.1.2",
+    "morgan": "^1.6.1",
     "path": "^0.11.14"
   },
   "devDependencies": {

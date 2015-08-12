@@ -2,7 +2,7 @@ var express         = require('express');
 var path            = require('path');
 var errorHandler    = require('errorhandler');
 var routes          = require('./routes');
-
+var morgan          = require('morgan');
 
 /**
  * Configures application
