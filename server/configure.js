@@ -2,7 +2,8 @@ var express         = require('express');
 var path            = require('path');
 var errorHandler    = require('errorhandler');
 var routes          = require('./routes');
-var morgan          = require('morgan');
+var logger          = require('morgan');
+var bodyParser      = require('body-parser');
 
 /**
  * Configures application
@@ -11,8 +12,12 @@ var morgan          = require('morgan');
  * @returns {*}
  */
 module.exports = function(app) {
-    app.use(morgan('dev'));
+
     app.set('port', process.env.PORT || 3300);
+
+    // Setting up middlewares
+    app.use(logger('dev'));
+    app.use(bodyParser.json);
     app.use('/public', express.static(path.join(__dirname, '../public')));
     routes.initialize(app);
     if ('development' === app.get('env')) {

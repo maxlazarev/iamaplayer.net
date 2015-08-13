@@ -1,10 +1,27 @@
 var app;
+var express     = require('express');
 var configure   = require('../../../server/configure');
-var morgan      = sinon.spy();
 
-describe('Server configs', function() {
+/**
+ * Checks if a middleware is set up
+ *
+ * @param {object} app Injected app object
+ * @param {string} middlewareName Middleware name
+ * @returns {boolean}
+ */
+function isMiddlewareSet(app, middlewareName) {
+    var _return = false;
+    app._router.stack.filter(function(layer) {
+        if (layer.handle.name == middlewareName) {
+            _return = true;
+        }
+    });
+    return _return;
+}
 
-    describe('without using app methods', function() {
+describe('Server configurations', function() {
+
+    describe('(while using app stub)', function() {
         beforeEach(function() {
             app = {
                 get: sinon.spy(),
@@ -24,24 +41,25 @@ describe('Server configs', function() {
 
     });
 
-    it('should use error handler in dev enviroment', function() {
-        app = {
-            get: sinon.stub().returns('development'),
-            set: sinon.spy(),
-            use: sinon.spy()
-        };
-        configure(app);
-        expect(app.use.thirdCall).to.be.calledWith(sinon.match.func);
-    });
+    describe('(while initialising app)', function() {
 
-    it('should use morgan', function() {
-        app = {
-            get: sinon.stub().returns('development'),
-            set: sinon.spy(),
-            use: sinon.spy()
-        };
-        configure(app);
-        expect(app.use.firstCall).to.be.calledWith(sinon.match.func);
+        beforeEach(function() {
+            app = express();
+            configure(app);
+        });
+
+        it('should use "errorHandler" middleware in dev env', function() {
+            app.get = sinon.stub().returns('development');
+            expect(isMiddlewareSet(app, 'errorHandler')).to.equal(true);
+        });
+
+        it('should use "morgan" middleware logger', function() {
+            expect(isMiddlewareSet(app, 'logger')).to.equal(true);
+        });
+
+        it('should use "bodyParser.json" middleware', function() {
+            expect(isMiddlewareSet(app, 'json')).to.equal(true);
+        });
     });
 
 });
