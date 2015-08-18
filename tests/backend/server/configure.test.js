@@ -1,14 +1,7 @@
 var app;
-var request     = require('request');
 var express     = require('express');
 var configure   = require('../../../server/configure');
-var req;
-var res         = {
-    header: sinon.spy(),
-    res:    sinon.stub(),
-    next:   sinon.stub()
-};
-var next;
+
 /**
  * Checks if a middleware is set up
  *
@@ -54,8 +47,6 @@ describe('Server configurations', function() {
 
         beforeEach(function() {
             app = express();
-          //  app.all = sinon.spy();
-
             configure(app);
         });
 
@@ -69,18 +60,6 @@ describe('Server configurations', function() {
 
         it('should use "bodyParser.json" middleware', function() {
             expect(isMiddlewareSet(app, 'json')).to.equal(true);
-        });
-
-        it('Should set "Access-Control-Allow-Origin" header ', function() {
-            it('should return 400', function (done) {
-                request.get('http://localhost:8000', function (err, res, body){
-                    expect(res.statusCode).to.equal(400);
-                    expect(res.body).to.equal('wrong header');
-                    done();
-                });
-            });
-            //app.all = sinon.stub().callsArgWith(1, req, res, next);
-            // expect(res.header).to.be.called;
         });
 
     });

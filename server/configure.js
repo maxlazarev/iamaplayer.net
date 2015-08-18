@@ -13,11 +13,7 @@ var cors            = require('../middlewares/cors.js');
  * @returns {*}
  */
 module.exports = function(app) {
-
     app.set('port', process.env.PORT || 3300);
-
-    // Setting up the routes
-    routes.initialize(app);
 
     // Setting up middlewares
     app.use(logger('dev'));
@@ -25,7 +21,6 @@ module.exports = function(app) {
     if ('development' === app.get('env')) {
         app.use(errorHandler());
     }
-    app.use(bodyParser.json);
 
     app.all('/*', function(req, res, next) {
         cors(req, res).then(function() {
@@ -35,5 +30,10 @@ module.exports = function(app) {
         .done();
     });
 
+    // Setting up the routes
+    routes.initialize(app);
+
+    // Body-parser middleware
+    app.use(bodyParser.json);
     return app;
 };
