@@ -24,10 +24,11 @@ describe('Server configurations', function() {
     describe('(while using app stub)', function() {
         beforeEach(function() {
             app = {
-                get: sinon.spy(),
-                set: sinon.spy(),
-                use: sinon.spy(),
-                all: sinon.stub()
+                get:    sinon.spy(),
+                post:   sinon.spy(),
+                set:    sinon.spy(),
+                use:    sinon.spy(),
+                all:    sinon.stub()
             };
             configure(app);
 

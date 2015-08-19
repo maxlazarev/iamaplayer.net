@@ -1,7 +1,7 @@
 var paths = require('../server/paths');
 var auth  = require('./auth');
 require('../constants')();
-console.log(auth);
+
 /**
  * Sets the routes
  *
@@ -26,6 +26,5 @@ module.exports.initialize = function(app) {
     /**
      *  Login route
      */
-
-    app.get('/login', auth.login);
+    app.post('/login', auth.login);
 };
