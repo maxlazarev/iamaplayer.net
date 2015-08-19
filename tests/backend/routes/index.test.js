@@ -1,14 +1,17 @@
+require('../../../constants')();
+var routes  = require('../../../routes');
+var auth    = require('../../../routes/auth');
+var paths   = require('../../../server/paths');
+var req;
 var app     = {
     get: sinon.stub(),
     post: sinon.spy()
 };
-var req;
 var res     = {
     sendFile: sinon.spy()
 };
-var routes  = require('../../../routes');
-var paths   = require('../../../server/paths');
-require('../../../constants')();
+
+
 
 describe('Routes', function() {
 
@@ -42,6 +45,17 @@ describe('Routes', function() {
             expect(res.sendFile)
                 .to.be.calledWith(global.DR + '/' + paths.front.indexDist);
         });
+    });
+
+    describe('auth routing', function() {
+        beforeEach(function() {
+            routes.initialize(app);
+        });
+
+        it('should handle /login ', function() {
+            expect(app.post).to.be.calledWith('/login', auth.login);
+        });
+
     });
 
 });
