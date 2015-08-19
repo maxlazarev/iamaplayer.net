@@ -1,8 +1,7 @@
 var express = require('express');
 var config  = require('./server/configure');
+require('./constants')();
 var app;
-
-global.DR = __dirname;
 
 app = express();
 app = config(app);

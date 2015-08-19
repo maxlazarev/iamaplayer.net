@@ -1,11 +1,14 @@
 var app     = {
-    get: sinon.spy(),
+    get: sinon.stub(),
     post: sinon.spy()
 };
 var req;
-var res     = sinon.spy();
-var routes  = require('../../../server/routes');
+var res     = {
+    sendFile: sinon.spy()
+};
+var routes  = require('../../../routes');
 var paths   = require('../../../server/paths');
+require('../../../constants')();
 
 describe('Routes', function() {
 
@@ -15,8 +18,10 @@ describe('Routes', function() {
 
     describe('should pass routing to angular', function() {
         beforeEach(function() {
-            app.get = sinon.stub().callsArgWith(1, req, res);
-            res.sendFile = sinon.spy();
+            app.get.onFirstCall().callsArgWith(1, req, res)
+                .onSecondCall().callsArgWith(1, req, res)
+                .onThirdCall().callsArgWith(1, req, res);
+
             routes.initialize(app);
         });
 
