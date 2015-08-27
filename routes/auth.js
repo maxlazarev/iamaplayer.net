@@ -1,8 +1,13 @@
 var jwt = require('jwt-simple');
 
 var auth = {
+    /**
+     * User authentication
+     *
+     * @param {obj} req request headers
+     * @param {obj} res response headers
+     */
     login: function(req, res) {
-        console.log(req.body);
         var username = req.body.username || '';
         var password = req.body.password || '';
 
@@ -13,6 +18,9 @@ var auth = {
                 meassage:   'Invalid credintals'
             });
         }
+    },
+    validate: function() {
+
     }
 };
 
