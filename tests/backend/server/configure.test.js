@@ -5,9 +5,9 @@ var configure   = require('../../../server/configure');
 /**
  * Checks if a middleware is set up
  *
- * @param {object} app Injected app object
- * @param {string} middlewareName Middleware name
- * @returns {boolean}
+ * @param {obj} app Injected app object
+ * @param {str} middlewareName Middleware name
+ * @returns {bool}
  */
 function isMiddlewareSet(app, middlewareName) {
     var _return = false;
@@ -60,7 +60,11 @@ describe('Server configurations', function() {
         });
 
         it('should use "bodyParser.json" middleware', function() {
-            expect(isMiddlewareSet(app, 'json')).to.equal(true);
+            expect(isMiddlewareSet(app, 'jsonParser')).to.equal(true);
+        });
+
+        it('should use "bodyParser.urlencoded" middleware', function() {
+            expect(isMiddlewareSet(app, 'urlencodedParser')).to.equal(true);
         });
 
     });
