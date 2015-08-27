@@ -2,10 +2,12 @@ var proxyquire;
 var expressStub;
 var app;
 var configStub;
+var mongooseStub;
 var server = function() {
     proxyquire('../../server', {
         './server/configure':   configStub,
-        express:                expressStub
+        express:                expressStub,
+        mongoose:               mongooseStub
     });
 };
 
@@ -21,7 +23,21 @@ describe('Server', function() {
         };
         expressStub = sinon.stub().returns(app);
         configStub = sinon.stub().returns(app);
+        mongooseStub = {
+            connect: sinon.spy(),
+            connection: {
+                on: sinon.spy()
+            }
+        };
         server();
+    });
+
+    it('should connect mongoose', function() {
+        expect(mongooseStub.connect).to.be.calledWith('mongodb://localhost/iamaplayer');
+    });
+
+    it('should lon openning', function() {
+        expect(mongooseStub.connection.on).to.be.calledWith('open', sinon.match.func);
     });
 
     it('should bootstrap the app', function() {
