@@ -9,7 +9,7 @@ var cors            = require('../middlewares/cors.js');
 /**
  * Configures application
  *
- * @param app
+ * @param {obj} app
  * @returns {*}
  */
 module.exports = function(app) {
@@ -17,6 +17,11 @@ module.exports = function(app) {
 
     // Setting up middlewares
     app.use(logger('dev'));
+    // Parse application/x-www-form-urlencoded
+    app.use(bodyParser.urlencoded({ extended: false }))
+    // Body-parser middleware
+    app.use(bodyParser.json());
+
     app.use('/public', express.static(path.join(__dirname, '../public')));
     if ('development' === app.get('env')) {
         app.use(errorHandler());
@@ -32,8 +37,5 @@ module.exports = function(app) {
 
     // Setting up the routes
     routes.initialize(app);
-
-    // Body-parser middleware
-    app.use(bodyParser.json);
     return app;
 };
