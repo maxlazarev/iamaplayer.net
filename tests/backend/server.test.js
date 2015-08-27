@@ -4,9 +4,9 @@ var app;
 var configStub;
 var server = function() {
     proxyquire('../../server', {
-        express: expressStub,
-        './server/configure': configStub
-    })
+        './server/configure':   configStub,
+        express:                expressStub
+    });
 };
 
 describe('Server', function() {
@@ -14,10 +14,10 @@ describe('Server', function() {
     beforeEach(function() {
         proxyquire = require('proxyquire');
         app = {
-            get: sinon.stub().returns(3300),
-            set: sinon.spy(),
+            get:    sinon.stub().returns(3300),
+            set:    sinon.spy(),
             listen: sinon.spy(),
-            use: sinon.spy()
+            use:    sinon.spy()
         };
         expressStub = sinon.stub().returns(app);
         configStub = sinon.stub().returns(app);

@@ -11,8 +11,6 @@ var res     = {
     sendFile: sinon.spy()
 };
 
-
-
 describe('Routes', function() {
 
     it('should have Directory Root constant defined', function() {
