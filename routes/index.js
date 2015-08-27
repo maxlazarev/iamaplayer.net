@@ -5,7 +5,7 @@ require('../constants')();
 /**
  * Sets the routes
  *
- * @param app
+ * @param {obj} app
  */
 module.exports.initialize = function(app) {
     /*
