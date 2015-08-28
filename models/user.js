@@ -1,7 +1,12 @@
-var mongoose    = require('mongoose');
-var Schema      = mongoose.Schema;
-var UserSchema = new Schema({
-    email:      { type: String },
+var mongoose        = require('mongoose');
+mongoose.Promise    = require('q').Promise;
+var validator       = require('../components/validator')
+var Schema          = mongoose.Schema;
+var UserSchema      = new Schema({
+    email:      {
+        type:       String,
+        validate:   [validator.email, 'Invalid email adress!']
+    },
     password:   { type: String },
     role:       { type: Number, default: 0 },
     firstName:  { type: String },

@@ -13,6 +13,20 @@ describe('User model', function() {
 
     });
 
+    it('should show error on wrong email', function() {
+        user = new UserModel({
+            email: 'wrong email adress'
+        });
+        return expect(user.validate()).to.be.rejected;
+    });
+
+    it('should not show errors on valid email adress', function() {
+        user = new UserModel({
+            email: 'test@test.io'
+        });
+        return expect(user.validate()).to.be.fulfilled;
+    });
+
     it('should have a schema', function() {
         expect(UserModel.schema).to.be.defined;
     });
