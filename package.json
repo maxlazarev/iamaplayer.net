@@ -37,7 +37,8 @@
     "mongoose": "^4.1.2",
     "morgan": "^1.6.1",
     "path": "^0.11.14",
-    "request": "^2.60.0"
+    "request": "^2.60.0",
+    "validator": "^4.0.5"
   },
   "devDependencies": {
     "chai": "^3.2.0",
