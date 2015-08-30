@@ -1,4 +1,6 @@
 require('../../../constants')();
+var sha1        = require('sha1');
+var proxyquire  = require('proxyquire');
 var validator   = require('validator');
 var auth;
 var res;
@@ -52,4 +54,51 @@ describe('Auth', function() {
             });
         });
     });
+
+    it('should make a query', function() {
+        var UserStub = {
+            findOne: sinon.stub().resolves({
+                email:      'diedsmiling@gmail.com',
+                password:   sha1('123')
+            })
+        };
+
+        auth = proxyquire('../../../routes/auth', {
+            '../models/user':   UserStub
+        });
+
+        auth.login(req, res);
+
+        expect(UserStub.findOne).to.be.calledWith({
+            email:      'valid@email.io',
+            password:   sha1('password')
+        });
+    });
+
+    it('should set token if user was found', function(done) {
+        var UserStub = {
+            findOne: sinon.stub().resolves({
+                email:      'diedsmiling@gmail.com',
+                password:   sha1('123')
+            })
+        };
+        var jwtHelperStub = {
+            genToken:   sinon.spy()
+        };
+
+        auth = proxyquire('../../../routes/auth', {
+            '../models/user':       UserStub,
+            '../helpers/jwtToken':  jwtHelperStub
+        });
+
+        auth.login(req, res);
+        return UserStub.findOne().then(function() {
+            expect(jwtHelperStub.genToken).to.be.called;
+            expect(res.json).to.be.called;
+            done();
+        });
+    });
+
+
+    //TODO needs refactor
 });

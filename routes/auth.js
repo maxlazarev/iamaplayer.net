@@ -1,4 +1,5 @@
 var User        = require('../models/user');
+var jwtHelper   = require('../helpers/jwtToken');
 var sha1        = require('sha1');
 var validator   = require('validator');
 var auth        = {
@@ -32,15 +33,13 @@ var auth        = {
             email: email,
             password: sha1(password)
         }).then(function(result) {
-            console.log(result);
-            auth.setToken(req, res);
+            res.json(jwtHelper.genToken());
         }).catch(function(err) {
 
         });
     },
     setToken: function(req, res) {
-        res.status(402);
-        console.log(req);
+
     }
 };
 

@@ -38,6 +38,7 @@
     "morgan": "^1.6.1",
     "path": "^0.11.14",
     "request": "^2.60.0",
+    "sha1": "^1.1.1",
     "validator": "^4.0.5"
   },
   "devDependencies": {
@@ -50,6 +51,7 @@
     "proxyquire": "^1.6.0",
     "q": "^1.4.1",
     "sinon": "^1.15.4",
+    "sinon-as-promised": "^4.0.0",
     "sinon-chai": "^2.8.0"
   }
 }

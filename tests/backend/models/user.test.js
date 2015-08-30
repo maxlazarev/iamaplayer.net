@@ -10,10 +10,9 @@ describe('User model', function() {
             firstName:  'Lazarev',
             lastName:   'Alexandr'
         });
-
     });
 
-    it('should show error on wrong email', function() {
+    it('should show errors on invalid email', function() {
         user = new UserModel({
             email: 'wrong email adress'
         });
