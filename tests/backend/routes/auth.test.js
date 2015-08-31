@@ -86,7 +86,9 @@ describe('Auth', function() {
 
         it('should set token if user was found', function(done) {
             var jwtHelperStub = {
-                genToken:   sinon.spy()
+                genToken:   sinon.stub().returns({
+                    key: 'value'
+                })
             };
 
             auth = proxyquire('../../../routes/auth', {
@@ -98,7 +100,9 @@ describe('Auth', function() {
 
             return UserStub.findOne().then(function() {
                 expect(jwtHelperStub.genToken).to.be.called;
-                expect(res.json).to.be.called;
+                expect(res.json).to.be.calledWith({
+                    key: 'value'
+                });
                 done();
             });
         });
