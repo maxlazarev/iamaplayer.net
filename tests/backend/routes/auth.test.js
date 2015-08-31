@@ -5,6 +5,7 @@ var validator   = require('validator');
 var auth;
 var res;
 var req;
+var UserStub;
 
 describe('Auth', function() {
 
@@ -21,7 +22,7 @@ describe('Auth', function() {
         };
     });
 
-    describe('Should validate requested data', function() {
+    describe('Validates requested data', function() {
         beforeEach(function() {
             auth = require('../../../routes/auth');
         });
@@ -31,6 +32,7 @@ describe('Auth', function() {
             req.body.email = '';
 
             auth.login(req, res);
+
             expect(res.status).to.be.calledWith(401);
             expect(res.json).to.be.calledWith({
                 status:     401,
@@ -40,13 +42,17 @@ describe('Auth', function() {
 
         it('should validate email', function() {
             validator.isEmail = sinon.spy();
+
             auth.login(req, res);
+
             expect(validator.isEmail).to.be.calledWith(sinon.match.string);
         });
 
         it('should handle 401 request with invalid email', function() {
             req.body.email = 'invalid email';
+
             auth.login(req, res);
+
             expect(res.status).to.be.calledWith(401);
             expect(res.json).to.be.calledWith({
                 status:     401,
@@ -55,50 +61,90 @@ describe('Auth', function() {
         });
     });
 
-    it('should make a query', function() {
-        var UserStub = {
-            findOne: sinon.stub().resolves({
-                email:      'diedsmiling@gmail.com',
-                password:   sha1('123')
-            })
-        };
-
-        auth = proxyquire('../../../routes/auth', {
-            '../models/user':   UserStub
+    describe('Authentication', function() {
+        beforeEach(function() {
+            UserStub = {
+                findOne: sinon.stub().resolves({
+                    email:      'diedsmiling@gmail.com',
+                    password:   sha1('123')
+                })
+            };
         });
 
-        auth.login(req, res);
+        it('should make a query', function() {
+            auth = proxyquire('../../../routes/auth', {
+                '../models/user':   UserStub
+            });
 
-        expect(UserStub.findOne).to.be.calledWith({
-            email:      'valid@email.io',
-            password:   sha1('password')
+            auth.login(req, res);
+
+            expect(UserStub.findOne).to.be.calledWith({
+                email:      'valid@email.io',
+                password:   sha1('password')
+            });
+        });
+
+        it('should set token if user was found', function(done) {
+            var jwtHelperStub = {
+                genToken:   sinon.spy()
+            };
+
+            auth = proxyquire('../../../routes/auth', {
+                '../models/user':       UserStub,
+                '../helpers/jwtToken':  jwtHelperStub
+            });
+
+            auth.login(req, res);
+
+            return UserStub.findOne().then(function() {
+                expect(jwtHelperStub.genToken).to.be.called;
+                expect(res.json).to.be.called;
+                done();
+            });
         });
     });
 
-    it('should set token if user was found', function(done) {
-        var UserStub = {
-            findOne: sinon.stub().resolves({
-                email:      'diedsmiling@gmail.com',
-                password:   sha1('123')
-            })
-        };
-        var jwtHelperStub = {
-            genToken:   sinon.spy()
-        };
+    describe('Authentication failure', function() {
+        it('should handle 500 if query failed', function(done) {
+            var UserStub = {
+                findOne: sinon.stub().rejects({
+                    message: 'Query failed!'
+                })
+            };
 
-        auth = proxyquire('../../../routes/auth', {
-            '../models/user':       UserStub,
-            '../helpers/jwtToken':  jwtHelperStub
+            auth = proxyquire('../../../routes/auth', {
+                '../models/user':   UserStub
+            });
+
+            auth.login(req, res);
+
+            return UserStub.findOne().catch(function() {
+                expect(res.status).to.be.calledWith(500);
+                expect(res.json).to.be.calledWith(sinon.match.object);
+                done();
+            });
         });
 
-        auth.login(req, res);
-        return UserStub.findOne().then(function() {
-            expect(jwtHelperStub.genToken).to.be.called;
-            expect(res.json).to.be.called;
-            done();
+        it('should handle 401 if use wasn`t found', function(done) {
+            var UserStub = {
+                findOne: sinon.stub().resolves(null)
+            };
+
+            auth = proxyquire('../../../routes/auth', {
+                '../models/user':       UserStub
+            });
+
+            auth.login(req, res);
+
+            return UserStub.findOne().then(function() {
+                expect(res.status).to.be.calledWith(401);
+                expect(res.json).to.be.calledWith({
+                    status:     401,
+                    message:    'Invalid email or password'
+                });
+                done();
+            });
         });
     });
 
-
-    //TODO needs refactor
 });

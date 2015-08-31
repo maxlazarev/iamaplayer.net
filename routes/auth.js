@@ -33,13 +33,22 @@ var auth        = {
             email: email,
             password: sha1(password)
         }).then(function(result) {
-            res.json(jwtHelper.genToken());
+            if (result) {
+                res.json(jwtHelper.genToken());
+            } else {
+                res.status(401);
+                res.json({
+                    status:     401,
+                    message:    'Invalid email or password'
+                });
+            }
         }).catch(function(err) {
-
+            res.status(500);
+            res.json({
+                status:     500,
+                error:    err
+            });
         });
-    },
-    setToken: function(req, res) {
-
     }
 };
 
