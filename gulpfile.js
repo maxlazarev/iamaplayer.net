@@ -2,7 +2,7 @@ var gulp            = require('gulp');
 var plugins         = require('gulp-load-plugins')();
 var appsPaths       = require('./server/paths');
 var apps            = Object.keys(appsPaths);
-console.log(plugins);
+
 /**
  * Builds task fo managing index file
  *
@@ -27,7 +27,12 @@ function buildDevIndexFileTask(appName, paths) {
     });
 }
 
-
+/**
+ * Builds sprite
+ *
+ * @param {str} appName Application name
+ * @param {obj} paths Application paths
+ */
 function buildSprite(appName, paths) {
     gulp.task('build_sprite_' + appName, function() {
         var spriteData =
@@ -42,7 +47,6 @@ function buildSprite(appName, paths) {
 
         spriteData.img.pipe(gulp.dest(paths.imgsDist));
         spriteData.css.pipe(gulp.dest(paths.cssSrc));
-
     });
 }
 
