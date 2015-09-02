@@ -1,6 +1,6 @@
 var paths = require('../server/paths');
 var auth  = require('./auth');
-require('../constants')();
+var constants = require('../constants');
 
 /**
  * Sets the routes
@@ -12,15 +12,15 @@ module.exports.initialize = function(app) {
      * Pass routing to angular app
      */
     app.get('*', function(req, res) {
-        res.sendFile(global.DR + '/' + paths.front.indexDist);
+        res.sendFile(constants.DR + '/' + paths.front.indexDist);
     });
 
     app.get('/admin', function(req, res) {
-        res.sendFile(global.DR + '/' + paths.admin.indexDist);
+        res.sendFile(constants.DR + '/' + paths.admin.indexDist);
     });
 
     app.get('/admin/*', function(req, res) {
-        res.sendFile(global.DR + '/' + paths.admin.indexDist);
+        res.sendFile(constants.DR + '/' + paths.admin.indexDist);
     });
 
     /**

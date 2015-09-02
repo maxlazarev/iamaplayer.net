@@ -1,4 +1,4 @@
-require('../../../constants')();
+var constants   = require('../../../constants');
 var jwtHelper   = require('../../../helpers/jwtToken');
 var proxyquire  = require('proxyquire');
 var dateTemp = Date;
@@ -20,7 +20,7 @@ describe('Jwt token helper',function() {
 
             expect(Date).to.be.called;
             expect(Date.prototype.getDate).to.be.called;
-            expect(Date.prototype.setDate).to.be.calledWith(Date.prototype.getDate() + global.TOKEN_EXPIRE_DAYS);
+            expect(Date.prototype.setDate).to.be.calledWith(Date.prototype.getDate() + constants.TOKEN_EXPIRE_DAYS);
         });
     });
 
@@ -44,8 +44,7 @@ describe('Jwt token helper',function() {
             jwtHelper.setExpirationDate = sinon.spy();
 
             jwtHelper.genToken(userStub);
-
-            expect(jwtHelper.setExpirationDate).to.be.calledWith(global.TOKEN_EXPIRE_DAYS);
+            expect(jwtHelper.setExpirationDate).to.be.calledWith(constants.TOKEN_EXPIRE_DAYS);
         });
 
         it('should generate token', function() {
@@ -64,7 +63,7 @@ describe('Jwt token helper',function() {
 
             expect(jwtStub.encode).to.be.calledWith({
                 exp: sinon.match.date
-            }, global.TOKEN_SECRET);
+            }, constants.TOKEN_SECRET);
         });
 
     });

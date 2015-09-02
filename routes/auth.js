@@ -32,9 +32,9 @@ var auth        = {
         User.findOne({
             email: email,
             password: sha1(password)
-        }).then(function(result) {
-            if (result) {
-                res.json(jwtHelper.genToken());
+        }).then(function(user) {
+            if (user) {
+                res.json(jwtHelper.genToken(user));
             } else {
                 res.status(401);
                 res.json({

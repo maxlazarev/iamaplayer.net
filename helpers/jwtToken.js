@@ -1,4 +1,6 @@
-var jwt = require('jwt-simple');
+var jwt         = require('jwt-simple');
+var constants   = require('../constants');
+
 module.exports = {
     /**
      * Generates token
@@ -7,10 +9,10 @@ module.exports = {
      * @returns {{token: *, expires: *, user: *}}
      */
     genToken: function(userData) {
-        var expireDate = this.setExpirationDate(global.TOKEN_EXPIRE_DAYS);
+        var expireDate = this.setExpirationDate(constants.TOKEN_EXPIRE_DAYS);
         var token = jwt.encode({
             exp: expireDate
-        }, global.TOKEN_SECRET);
+        }, constants.TOKEN_SECRET);
 
         return {
             token: token,
@@ -27,4 +29,4 @@ module.exports = {
         var dateObj = new Date();
         return dateObj.setDate(dateObj.getDate() + numDays);
     }
-}
+};

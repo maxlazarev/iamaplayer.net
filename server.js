@@ -1,4 +1,3 @@
-require('./constants')();
 var express     = require('express');
 var config      = require('./server/configure');
 var mongoose    = require('mongoose');

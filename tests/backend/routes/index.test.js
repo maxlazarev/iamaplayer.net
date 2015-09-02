@@ -1,9 +1,9 @@
-require('../../../constants')();
-var routes  = require('../../../routes');
-var auth    = require('../../../routes/auth');
-var paths   = require('../../../server/paths');
+var constants   = require('../../../constants');
+var routes      = require('../../../routes');
+var auth        = require('../../../routes/auth');
+var paths       = require('../../../server/paths');
 var req;
-var app     = {
+var app         = {
     get: sinon.stub(),
     post: sinon.spy()
 };
@@ -14,7 +14,7 @@ var res     = {
 describe('Routes', function() {
 
     it('should have Directory Root constant defined', function() {
-        expect(global.DR).to.be.defined;
+        expect(constants.DR).to.be.defined;
     });
 
     describe('should pass routing to angular', function() {
@@ -29,19 +29,19 @@ describe('Routes', function() {
         it('handle *', function() {
             expect(app.get).to.be.calledWith('*', sinon.match.func);
             expect(res.sendFile)
-                .to.be.calledWith(global.DR + '/' +  paths.admin.indexDist);
+                .to.be.calledWith(constants.DR + '/' +  paths.admin.indexDist);
         });
 
         it('handle /admin', function() {
             expect(app.get).to.be.calledWith('/admin', sinon.match.func);
             expect(res.sendFile)
-                .to.be.calledWith(global.DR + '/' + paths.admin.indexDist);
+                .to.be.calledWith(constants.DR + '/' + paths.admin.indexDist);
         });
 
         it('handle /admin/* ', function() {
             expect(app.get).to.be.calledWith('/admin/*', sinon.match.func);
             expect(res.sendFile)
-                .to.be.calledWith(global.DR + '/' + paths.front.indexDist);
+                .to.be.calledWith(constants.DR + '/' + paths.front.indexDist);
         });
     });
 
