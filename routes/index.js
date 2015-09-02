@@ -11,17 +11,19 @@ module.exports.initialize = function(app) {
     /*
      * Pass routing to angular app
      */
-    app.get('*', function(req, res) {
-        res.sendFile(constants.DR + '/' + paths.front.indexDist);
-    });
-
     app.get('/admin', function(req, res) {
+
         res.sendFile(constants.DR + '/' + paths.admin.indexDist);
     });
 
     app.get('/admin/*', function(req, res) {
         res.sendFile(constants.DR + '/' + paths.admin.indexDist);
     });
+
+    app.get('*', function(req, res) {
+        res.sendFile(constants.DR + '/' + paths.front.indexDist);
+    });
+
 
     /**
      *  Login route

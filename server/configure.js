@@ -4,7 +4,7 @@ var errorHandler    = require('errorhandler');
 var routes          = require('../routes');
 var logger          = require('morgan');
 var bodyParser      = require('body-parser');
-var cors            = require('../middlewares/cors.js');
+var cors            = require('../middlewares/cors');
 
 /**
  * Configures application
@@ -37,5 +37,6 @@ module.exports = function(app) {
 
     // Setting up the routes
     routes.initialize(app);
+
     return app;
 };

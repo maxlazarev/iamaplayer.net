@@ -2,14 +2,14 @@ var gulp            = require('gulp');
 var plugins         = require('gulp-load-plugins')();
 var appsPaths       = require('./server/paths');
 var apps            = Object.keys(appsPaths);
-
-
+console.log(plugins);
 /**
  * Builds task fo managing index file
- * @param appName
+ *
+ * @param {str} appName  Application name
+ * @param {obj} paths Application paths
  */
-function buildDevIndexFileTask(appName) {
-    var paths = appsPaths[appName];
+function buildDevIndexFileTask(appName, paths) {
     gulp.task('build_index_' + appName, function() {
         var manifest = {
             js:     paths.jsDist,
@@ -27,16 +27,37 @@ function buildDevIndexFileTask(appName) {
     });
 }
 
+
+function buildSprite(appName, paths) {
+    gulp.task('build_sprite_' + appName, function() {
+        var spriteData =
+            gulp.src(paths.spriteSrc)
+                .pipe(plugins.debug({title: 'Sprite src'}))
+                .pipe(plugins.spritesmith({
+                    imgName:    'sprite.png',
+                    cssName:    'sprite.css',
+                    algorithm:  'binary-tree',
+                    imgPath:    '/img/sprite.png'
+                }));
+
+        spriteData.img.pipe(gulp.dest(paths.imgsDist));
+        spriteData.css.pipe(gulp.dest(paths.cssSrc));
+
+    });
+}
+
 /**
  * Build tasks for both apps "admin" and "front"
  */
 apps.forEach(function(appName) {
-    buildDevIndexFileTask(appName);
+    var paths = appsPaths[appName];
+    buildDevIndexFileTask(appName, paths);
+    buildSprite(appName, paths);
 });
 
 gulp.task('watch', ['build_index_admin', 'build_index_front'], function() {
     apps.forEach(function(appName) {
-        gulp.watch(appsPaths[appName].indexSrc, ['build_index_' + appName])
+        gulp.watch(appsPaths[appName].indexSrc, ['build_index_' + appName]);
     });
 });
 
