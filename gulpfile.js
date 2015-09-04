@@ -13,15 +13,15 @@ var apps            = Object.keys(appsPaths);
 function buildDevIndexFileTask(appName, paths) {
     gulp.task('build_index_' + appName, function() {
         var manifest = {
-            js:     paths.jsDist,
-            css:    paths.cssDist
+            js:     paths.jsDest,
+            css:    paths.cssDest + '/app.css'
         };
         return gulp.src(paths.indexSrc)
             .pipe(plugins.template({
-                css: manifest.css,
-                js: manifest.js
+                css:    manifest.css,
+                js:     manifest.js
             }))
-            .pipe(plugins.rename(paths.indexDist))
+            .pipe(plugins.rename(paths.indexDest))
             .pipe(gulp.dest('./'));
     });
 }
@@ -40,10 +40,10 @@ function buildSprite(appName, paths) {
                     imgName:    'sprite.png',
                     cssName:    'sprite.css',
                     algorithm:  'binary-tree',
-                    imgPath:    '/img/sprite.png'
+                    imgPath:    '/public/' + appName + '/img/sprite.png'
                 }));
 
-        spriteData.img.pipe(gulp.dest(paths.imgsDist));
+        spriteData.img.pipe(gulp.dest(paths.imgsDest));
         spriteData.css.pipe(gulp.dest(paths.cssSrc));
     });
 }
@@ -74,7 +74,7 @@ function buildCompressedCss(appName, paths) {
         return gulp.src(paths.cssSrc + '/**/*.css')
             .pipe(plugins.concat('app.css'))
             .pipe(plugins.minifyCss())
-            .pipe(gulp.dest(paths.cssDist));
+            .pipe(gulp.dest(paths.cssDest));
     });
 }
 
@@ -100,9 +100,9 @@ gulp.task('watch', [
     'build_sprite_front'
     ], function() {
     apps.forEach(function(appName) {
-        gulp.watch(appsPaths[appName].indexSrc, ['compress_css_' + appName]);
-        gulp.watch(appsPaths[appName].spriteSrc,['compress_css_' + appName]);
-        gulp.watch(appsPaths[appName].scssSrc,  ['compress_css_' + appName]);
+        gulp.watch(appsPaths[appName].indexSrc, ['build_index_' + appName]);
+        gulp.watch(appsPaths[appName].spriteSrc,['build_sprite_' + appName]);
+        gulp.watch(appsPaths[appName].scssSrc,  ['compile_scss_' + appName]);
         gulp.watch(appsPaths[appName].cssSrc + '/**/*.css',   ['compress_css_' + appName]);
     });
 });

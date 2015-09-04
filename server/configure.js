@@ -21,7 +21,7 @@ module.exports = function(app) {
     app.use(bodyParser.urlencoded({ extended: false }))
     // Body-parser middleware
     app.use(bodyParser.json());
-
+    console.log(path.join(__dirname, '../public'));
     app.use('/public', express.static(path.join(__dirname, '../public')));
     if ('development' === app.get('env')) {
         app.use(errorHandler());

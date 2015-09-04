@@ -17,11 +17,11 @@ module.exports = {
          * Destinations
          */
 
-        jsDist:     'public/js/app.js',
-        cssDist:    'public/css/',
-        indexDist:  'public/app.html',
-        distDir:    'public',
-        imgsDist:   'public/img'
+        jsDest:     'public/js/app.js',
+        cssDest:    'public/css/',
+        indexDest:  'public/app.html',
+        destDir:    'public',
+        imgsDest:   'public/img'
     },
     admin: {
 
@@ -40,10 +40,10 @@ module.exports = {
          * Destinations
          */
 
-        jsDist:     'public/admin/js/app.js',
-        cssDist:    'public/admin/css',
-        indexDist:  'public/admin/app.html',
-        distDir:    'public/admin',
-        imgsDist:   'public/admin/img'
+        jsDest:     'public/admin/js/app.js',
+        cssDest:    'public/admin/css',
+        indexDest:  'public/admin/app.html',
+        DestDir:    'public/admin',
+        imgsDest:   'public/admin/img'
     }
 };
