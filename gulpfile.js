@@ -17,14 +17,12 @@ function buildDevIndexFileTask(appName, paths) {
             css:    paths.cssDist
         };
         return gulp.src(paths.indexSrc)
-            .pipe(plugins.debug({title: 'Index'}))
             .pipe(plugins.template({
                 css: manifest.css,
                 js: manifest.js
             }))
             .pipe(plugins.rename(paths.indexDist))
-            .pipe(gulp.dest('./'))
-            .pipe(plugins.debug({title: 'Index'}));
+            .pipe(gulp.dest('./'));
     });
 }
 
@@ -38,7 +36,6 @@ function buildSprite(appName, paths) {
     gulp.task('build_sprite_' + appName, function() {
         var spriteData =
             gulp.src(paths.spriteSrc)
-                .pipe(plugins.debug({title: 'Sprite src'}))
                 .pipe(plugins.spritesmith({
                     imgName:    'sprite.png',
                     cssName:    'sprite.css',
@@ -58,13 +55,11 @@ function buildSprite(appName, paths) {
  * @param {obj} paths Application paths
  */
 function compileScss(appName, paths) {
-    gulp.task('compile_scss_' + appName, ['build_sprite_' + appName], function() {
+    gulp.task('compile_scss_' + appName, function() {
         return gulp.src(paths.scssSrc)
-            .pipe(plugins.debug({title: 'Scss src'}))
             .pipe(plugins.if(/scss$/, plugins.sass()))
             .pipe(clip())
-            .pipe(gulp.dest(paths.cssSrc))
-            .pipe(plugins.debug({title: 'Scss dist'}));
+            .pipe(gulp.dest(paths.cssSrc));
     });
 }
 
@@ -75,9 +70,8 @@ function compileScss(appName, paths) {
  * @param {obj} paths Application paths
  */
 function buildCompressedCss(appName, paths) {
-    gulp.task('compress_css_' + appName, ['compile_scss_' + appName], function() {
+    gulp.task('compress_css_' + appName, function() {
         return gulp.src(paths.cssSrc + '/**/*.css')
-            .pipe(plugins.debug({title: 'Css src'}))
             .pipe(plugins.concat('app.css'))
             .pipe(plugins.minifyCss())
             .pipe(gulp.dest(paths.cssDist));
@@ -99,12 +93,16 @@ gulp.task('watch', [
     'build_index_admin',
     'build_index_front',
     'compress_css_admin',
-    'compress_css_front'
+    'compress_css_front',
+    'compile_scss_admin',
+    'compile_scss_front',
+    'build_sprite_admin',
+    'build_sprite_front'
     ], function() {
     apps.forEach(function(appName) {
-        gulp.watch(appsPaths[appName].indexSrc, ['build_index_' + appName]);
-        gulp.watch(appsPaths[appName].spriteSrc,['build_sprite_' + appName]);
-        gulp.watch(appsPaths[appName].scssSrc,  ['compile_scss_' + appName]);
+        gulp.watch(appsPaths[appName].indexSrc, ['compress_css_' + appName]);
+        gulp.watch(appsPaths[appName].spriteSrc,['compress_css_' + appName]);
+        gulp.watch(appsPaths[appName].scssSrc,  ['compress_css_' + appName]);
         gulp.watch(appsPaths[appName].cssSrc + '/**/*.css',   ['compress_css_' + appName]);
     });
 });
