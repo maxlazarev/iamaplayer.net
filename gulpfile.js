@@ -50,6 +50,7 @@ function buildSprite(appName, paths) {
         spriteData.css.pipe(gulp.dest(paths.cssSrc));
     });
 }
+
 /**
  * Compiles scss files
  *
@@ -66,7 +67,6 @@ function compileScss(appName, paths) {
             .pipe(plugins.debug({title: 'Scss dist'}));
     });
 }
-
 
 /**
  * Concatinates and minifies css files
