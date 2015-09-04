@@ -13,15 +13,15 @@ module.exports.initialize = function(app) {
      */
     app.get('/admin', function(req, res) {
 
-        res.sendFile(constants.DR + '/' + paths.admin.indexDist);
+        res.sendFile(constants.DR + '/' + paths.admin.indexDest);
     });
 
     app.get('/admin/*', function(req, res) {
-        res.sendFile(constants.DR + '/' + paths.admin.indexDist);
+        res.sendFile(constants.DR + '/' + paths.admin.indexDest);
     });
 
     app.get('*', function(req, res) {
-        res.sendFile(constants.DR + '/' + paths.front.indexDist);
+        res.sendFile(constants.DR + '/' + paths.front.indexDest);
     });
 
 
