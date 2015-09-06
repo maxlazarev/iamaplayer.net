@@ -17,6 +17,7 @@ function buildDevIndexFileTask(appName, paths) {
             js:     '/' + paths.jsDest + 'app.js',
             css:    '/' + paths.cssDest + '/app.css'
         };
+
         return gulp.src(paths.indexSrc)
             .pipe(plugins.template({
                 css:    manifest.css,
