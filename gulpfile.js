@@ -1,6 +1,7 @@
 var gulp            = require('gulp');
 var plugins         = require('gulp-load-plugins')();
 var clip            = require('gulp-clip-empty-files');
+var es              = require('event-stream');
 var appsPaths       = require('./server/paths');
 var apps            = Object.keys(appsPaths);
 
@@ -13,8 +14,8 @@ var apps            = Object.keys(appsPaths);
 function buildDevIndexFileTask(appName, paths) {
     gulp.task('build_index_' + appName, function() {
         var manifest = {
-            js:     paths.jsDest,
-            css:    paths.cssDest + '/app.css'
+            js:     '/' + paths.jsDest + 'app.js',
+            css:    '/' + paths.cssDest + '/app.css'
         };
         return gulp.src(paths.indexSrc)
             .pipe(plugins.template({
@@ -78,8 +79,45 @@ function buildCompressedCss(appName, paths) {
     });
 }
 
+
 /**
- * Build tasks for both apps "admin" and "front"
+ * Add scripts task for development environment
+ *
+ * @param {str} appName Application name
+ * @param {obj} paths Application paths
+ */
+function createDevelopmentScriptsTask(appName, paths) {
+    gulp.task('build_scripts_' + appName, function() {
+        return gulp.src(paths.vendorJs.concat(paths.jsSrc, paths.tplSrc))
+            .pipe(plugins.debug())
+            .pipe(plugins.if(/html$/, buildTemplates()))
+            .pipe(plugins.sourcemaps.init())
+            .pipe(plugins.concat('app.js'))
+            .pipe(plugins.sourcemaps.write('.'))
+            .pipe(gulp.dest(paths.jsDest));
+    });
+}
+
+/**
+ * Build angular templates and save them to cache
+ *
+ * @returns {*}
+ */
+function buildTemplates() {
+    return es.pipeline(
+        plugins.minifyHtml({
+            empty: true,
+            spare: true,
+            quotes: true
+        }),
+        plugins.angularTemplatecache({
+            module: 'adminApp'
+        })
+    );
+}
+
+/**
+ * Build tasks for both apps "admin" and "frontend"
  */
 apps.forEach(function(appName) {
     var paths = appsPaths[appName];
@@ -87,6 +125,7 @@ apps.forEach(function(appName) {
     buildSprite(appName, paths);
     compileScss(appName, paths);
     buildCompressedCss(appName, paths);
+    createDevelopmentScriptsTask(appName, paths);
 });
 
 gulp.task('watch', [
@@ -97,13 +136,18 @@ gulp.task('watch', [
     'compile_scss_admin',
     'compile_scss_front',
     'build_sprite_admin',
-    'build_sprite_front'
+    'build_sprite_front',
+    'build_scripts_admin',
+    'build_scripts_front'
     ], function() {
     apps.forEach(function(appName) {
         gulp.watch(appsPaths[appName].indexSrc, ['build_index_' + appName]);
         gulp.watch(appsPaths[appName].spriteSrc,['build_sprite_' + appName]);
         gulp.watch(appsPaths[appName].scssSrc,  ['compile_scss_' + appName]);
         gulp.watch(appsPaths[appName].cssSrc + '/**/*.css',   ['compress_css_' + appName]);
+        gulp.watch(appsPaths[appName].jsSrc, ['build_scripts_' + appName]);
+        gulp.watch(appsPaths[appName].tplSrc, ['build_scripts_' + appName]);
+        gulp.watch(appsPaths[appName].vendorJs, ['build_scripts_' + appName]);
     });
 });
 

@@ -1,4 +1,6 @@
 var rootDir = 'frontend';
+bc = rootDir + '/bower_components';
+
 module.exports = {
     front: {
 
@@ -12,12 +14,19 @@ module.exports = {
         cssSrc:     rootDir + '/app/css',
         indexSrc:   rootDir + '/app/index.html',
         spriteSrc:  rootDir + '/app/sprite_src/*',
+        tplSrc:     rootDir + '/app/js/**/*.tpl.html',
+        vendorJs:   [
+            bc + '/angular/angular.js',
+            bc + '/ngstorage/ngStorage.js',
+            bc + '/angular-animate/angular-animate.js',
+            bc + '/angular-route/angular-route.js'
+        ],
 
         /**
          * Destinations
          */
 
-        jsDest:     'public/js/app.js',
+        jsDest:     'public/js/',
         cssDest:    'public/css/',
         indexDest:  'public/app.html',
         destDir:    'public',
@@ -35,12 +44,19 @@ module.exports = {
         scssSrc:    rootDir + '/admin_app/scss/*.scss',
         indexSrc:   rootDir + '/admin_app/index.html',
         spriteSrc:  rootDir + '/admin_app/sprite_src/*',
+        tplSrc:     rootDir + '/admin_app/js/**/*.tpl.html',
+        vendorJs:   [
+            bc + '/angular/angular.js',
+            bc + '/ngstorage/ngStorage.js',
+            bc + '/angular-animate/angular-animate.js',
+            bc + '/angular-route/angular-route.js'
+        ],
 
         /**
          * Destinations
          */
 
-        jsDest:     'public/admin/js/app.js',
+        jsDest:     'public/admin/js/',
         cssDest:    'public/admin/css',
         indexDest:  'public/admin/app.html',
         DestDir:    'public/admin',
