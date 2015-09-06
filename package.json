@@ -7,7 +7,7 @@
     "test": "mocha -r tests/testhelper.js -R spec tests/backend/**/**/*.js",
     "start": "node server.js",
     "test-front": "node node_modules/karma/bin/karma start tests/frontend/karma.conf.js",
-    "protractor": "protractor tests/frontend/protractor-conf.js"
+    "protractor": "protractor tests/frontend/protractor.conf.js"
   },
   "repository": {
     "type": "git",
@@ -59,6 +59,8 @@
     "chai": "^3.2.0",
     "chai-as-promised": "^5.1.0",
     "karma": "^0.13.9",
+    "karma-chrome-launcher": "^0.2.0",
+    "karma-mocha": "^0.2.0",
     "mocha": "^1.21.5",
     "mocha-as-promised": "^2.0.0",
     "node-mocks-http": "^1.4.3",
