@@ -80,7 +80,6 @@ function buildCompressedCss(appName, paths) {
     });
 }
 
-
 /**
  * Add scripts task for development environment
  *
