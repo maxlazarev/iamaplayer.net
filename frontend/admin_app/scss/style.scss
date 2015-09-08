@@ -1,16 +1,21 @@
-.admin-logo{
+.admin_logo{
     text-align: center;
     .icon-logo_43x43{
         display: inline-block;
         position: relative;
         top: 10px;
     }
-    .admin-logo-link{
+    .admin_logo_link {
         color: #000;
     }
 }
-
-.admin-login-form{
+.remember_me_field{
+    margin-bottom: 25px;
+}
+.no_margin_bottom{
+    margin-bottom: 0px;
+}
+.admin_login_form{
     margin-top: 10%;
 }
 .center_with_position_rel{

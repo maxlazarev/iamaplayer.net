@@ -12,10 +12,10 @@
 <body>
 <div class="container">
     <div class="row">
-        <form class="col s12 offset-s0 m6 offset-m3 admin-login-form">
-            <h4 class="light valign admin-logo">
-                <a class="admin-logo-link" href="/">
-                    <i class="admin-logo icon-logo_43x43"></i>
+        <form class="col s12 offset-s0 m6 offset-m3 admin_login_form">
+            <h4 class="light valign admin_logo">
+                <a class="admin_logo_link" href="/">
+                    <i class="admin_logo icon-logo_43x43"></i>
                     <span class="hide-on-med-and-down">
                         Iamaplayer.io
                     </span>
@@ -28,10 +28,18 @@
                     <label for="email">Email</label>
                 </div>
             </div>
-            <div class="row valign">
+            <div class="row valign no_margin_bottom">
                 <div class="input-field offset-s2 col s8 light">
                     <input id="password" type="password" class="validate light text-light-green darken-4">
                     <label for="password">Пароль</label>
+                </div>
+            </div>
+            <div class="row valign remember_me_field">
+                <div class="offset-s2 col s8 light">
+                    <p>
+                        <input type="checkbox" name="data[f_remember_me]" id="remember_me" />
+                        <label for="remember_me">Запомнить меня</label>
+                    </p>
                 </div>
             </div>
             <div class="row valign-wrapper">
