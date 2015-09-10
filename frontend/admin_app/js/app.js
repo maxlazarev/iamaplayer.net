@@ -1,7 +1,21 @@
 var adminApp = angular.module('adminApp', [
-    'ngRoute'
+    'ngRoute',
+    'adminAppControllers'
 ]);
 
 adminApp.config(['$routeProvider', function($routeProvider) {
-    console.log('ddd');
+    /**
+     * Setting routes
+     */
+    $routeProvider.when('/', {
+        templateUrl:    '/templates/login.tpl.html',
+        controller:     'loginController'
+    }).when('/index', {
+        templateUrl:    '/templates/index.tpl.html',
+        controller:     'indexController'
+    });
+
 }]);
+
+
+var adminAppControllers = angular.module('adminAppControllers', []),
