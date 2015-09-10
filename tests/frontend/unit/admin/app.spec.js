@@ -15,14 +15,14 @@ describe('Testing config block', function() {
 
     it('should handle "/" request', function() {
         expect(mockRouteProvider.when).toHaveBeenCalledWith('/', {
-            templateUrl:    '/templates/login.tpl.html',
+            templateUrl:    'templates/login.tpl.html',
             controller:     'loginController'
         });
     });
 
     it('should handle "/index" request', function() {
         expect(mockRouteProvider.when).toHaveBeenCalledWith('/index', {
-            templateUrl:    '/templates/index.tpl.html',
+            templateUrl:    'templates/index.tpl.html',
             controller:     'indexController'
         });
     });
