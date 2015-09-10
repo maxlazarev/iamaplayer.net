@@ -1,6 +1,6 @@
 'user strict';
 
-adminAppControllers.contoller('indexController',
+adminAppControllers.controller('indexController',
     ['$scope', '$location', function($scope, $location) {
         console.log('a');
     }]

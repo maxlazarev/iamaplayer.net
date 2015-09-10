@@ -8,8 +8,7 @@ module.exports = {
          * Sources
          */
 
-        jsSrc:      [rootDir + '/app/js/app.js', rootDir + 'app/js/**/*.js'],
-        tplsSrc:    rootDir + '/app/js/**/*.tpl.html',
+        jsSrc:      [rootDir + '/app/js/app.js', rootDir + '/app/js/**/*.js'],
         scssSrc:    rootDir + '/app/scss/',
         cssSrc:     rootDir + '/app/css',
         indexSrc:   rootDir + '/app/index.html',
@@ -38,8 +37,8 @@ module.exports = {
          *  Sources
          */
 
-        jsSrc:      [rootDir + '/admin_app/js/app.js', rootDir + 'admin_app/js/**/*.js'],
-        tplsSrc:    rootDir + '/admin_app/js/**/*.tpl.html',
+        jsSrc:      [rootDir + '/admin_app/js/app.js', rootDir + '/admin_app/js/**/*.js'],
+        jsAppSrc:   rootDir + 'admin_app/js/**/*.js',
         cssSrc:     rootDir + '/admin_app/css/',
         scssSrc:    rootDir + '/admin_app/scss/*.scss',
         indexSrc:   rootDir + '/admin_app/index.html',
