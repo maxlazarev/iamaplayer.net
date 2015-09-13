@@ -1,7 +1,7 @@
 'user strict';
 
 adminAppControllers.controller('indexController',
-    ['$scope', '$location', function($scope, $location) {
-        console.log('a');
+    ['$scope', '$location', function($scope, $location, $rootElement) {
+
     }]
 );
