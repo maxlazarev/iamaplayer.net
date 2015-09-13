@@ -1,6 +1,7 @@
 var adminApp = angular.module('adminApp', [
     'ngRoute',
-    'adminAppControllers'
+    'adminAppControllers',
+    'adminAppDirectives'
 ]);
 
 adminApp.config(['$routeProvider', function($routeProvider) {
@@ -18,3 +19,4 @@ adminApp.config(['$routeProvider', function($routeProvider) {
 }]);
 
 var adminAppControllers = angular.module('adminAppControllers', []);
+var adminAppDirectives = angular.module('adminAppDirectives', []);
