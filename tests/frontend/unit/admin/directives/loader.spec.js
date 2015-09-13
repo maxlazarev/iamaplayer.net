@@ -13,7 +13,7 @@ describe('data-loader directive', function() {
         });
     });
 
-    it('should show spinner when request is fired', function() {
+    it('should show spinner when request is handled', function() {
         $http.pendingRequests.length = 1;
         directiveElem = getCompiledElem();
 
@@ -22,7 +22,7 @@ describe('data-loader directive', function() {
         expect(attr).toEqual('display: block;');
     });
 
-    it('should hide spinner when request is fired', function() {
+    it('should hide spinner when request is done', function() {
         $http.pendingRequests.length = 0;
         directiveElem = getCompiledElem();
 
