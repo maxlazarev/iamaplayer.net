@@ -1,6 +1,6 @@
 <div class="row">
-    <form class="col s12 offset-s0 m6 offset-m3 admin_login_form">
-        <h4 class="light valign admin_logo">
+    <form name="form" novalidate ng-controller="loginController" ng-submit="login()" class="col s12 offset-s0 m6 offset-m3 admin_login_form">
+        <h4 class="li3ght valign admin_logo">
             <a class="admin_logo_link" href="/admin/#index">
                 <i class="admin_logo icon-logo_43x43"></i>
                     <span class="hide-on-med-and-down">
@@ -11,13 +11,18 @@
         <h6 class="light center-align ">Предъявите документы</h6>
         <div class="row valign margin_bottom_10">
             <div class="input-field offset-s2 col s8 light">
-                <input id="email" type="email" class="text-green light validate">
+                <span class="errors_container">
+                    <span class="ng-error-text" ng-show="form.email.$error.required">
+                        Email адрес нам необходим!
+                    </span>
+                </span>
+                <input required ng-model="auth.email" errors-carrier="errors_container" name="email" id="email" type="email" class="text-green light">
                 <label for="email">Email</label>
             </div>
         </div>
         <div class="row valign margin_bottom_10">
             <div class="input-field offset-s2 col s8 light">
-                <input id="password" type="password" class="validate light text-light-green darken-4">
+                <input required ng-model="auth.password" id="password" type="password" class="validate light text-light-green darken-4">
                 <label for="password">Пароль</label>
             </div>
         </div>

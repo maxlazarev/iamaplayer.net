@@ -1,3 +1,5 @@
+$errorColor: #F44336;
+
 .admin_logo{
     text-align: center;
     .icon-logo_43x43{
@@ -25,4 +27,20 @@
     position: relative;
     left: 50%;
     margin-left: -50px
+}
+/* forms */
+.errors_container{
+    display: none;
+}
+input.ng-invalid.ng-touched{
+    border-bottom: 1px solid $errorColor;
+    box-shadow: 0 1px 0 0 $errorColor;
+}
+.ng-error-text{
+    position: absolute;
+    color: $errorColor;
+}
+.admin_login_form .ng-error-text{
+    top: 0.8rem;
+    right: 0.75rem;
 }

@@ -107,3 +107,8 @@ $fadeOutAnimation: $fadeDuration fade-out;
       -webkit-transform: scale(1.0);
     }
 }
+
+/* form animations */
+.ng-error-text{
+  @include fadeAnimations($fadeInAnimation);
+}

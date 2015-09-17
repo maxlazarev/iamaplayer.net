@@ -50,7 +50,7 @@ describe('auth service', function() {
 
     it('it should handle a request and call success callback', function() {
         var returnData = {
-            token:      'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE0NDI5NTYxNjAyMTN9.iffbmJ9FCpx-_n_tF7IxJCL7d3i2lQR6vKWDskWNdYE',
+            token:      'token_string',
             expires:    1442956160213,
             user: {
                 _id:        '55e17437e5c84aea343e12fd',
