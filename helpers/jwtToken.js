@@ -24,6 +24,7 @@ module.exports = {
      * Sets token expirtation date
      *
      * @param {int} numDays
+     * @returns {obj}
      */
     setExpirationDate: function(numDays) {
         var dateObj = new Date();

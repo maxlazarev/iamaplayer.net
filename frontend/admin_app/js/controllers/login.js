@@ -1,16 +1,25 @@
 'user strict';
 
 adminAppControllers.controller('loginController', [
-    '$scope', '$location', 'auth', function($scope, $location, auth) {
+    '$scope', '$location', 'auth',
+    function($scope, $location, auth) {
 
+        /**
+         * Send login data
+         *
+         * @returns {bool}
+         */
         $scope.login = function() {
-            console.log($scope.form);
-            return false;
+            auth.login($scope.data,
+                $scope.onAuthenticationSuccess, $scope.onAuthenticationError);
         };
 
-        auth.login({
-            email: 'diedsmiling@gmail.com',
-            passwrod: '123'
-        });
+        $scope.onAuthenticationSuccess = function(success) {
+
+        };
+
+        $scope.onAuthenticationError = function(error) {
+
+        };
     }]
 );
