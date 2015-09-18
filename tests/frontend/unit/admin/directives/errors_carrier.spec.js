@@ -8,25 +8,18 @@ describe('Errors carrier directive', function() {
         inject(function($compile, $rootScope, $injector) {
             compile = $compile;
             scope = $rootScope.$new();
-            spyOn(scope, '$watch').and.callThrough();
         });
+        directiveElem = getCompiledElem();
     });
 
     it('should show sibling error container if has error class class', function() {
-        directiveElem = getCompiledElem(true, true);
-
-        expect(scope.$watch).toHaveBeenCalled();
-        expect($(directiveElem[0]).attr('style')).toEqual('display: inline;');
+        $(directiveElem[1]).triggerHandler('focus');
+        expect($(directiveElem[0]).attr('style')).toEqual('display: none;');
     });
 
     it('should hide sibling error container if doesn`t have error class', function() {
-        directiveElem = getCompiledElem(false, true);
-
-        expect($(directiveElem[0]).attr('style')).toEqual('display: none;');
-
-        directiveElem = getCompiledElem(false, false);
-
-        expect($(directiveElem[0]).attr('style')).toEqual('display: none;');
+        $(directiveElem[1]).triggerHandler('blur');
+        expect($(directiveElem[0]).attr('style')).toEqual('display: inline;');
     });
 
     /**
@@ -34,14 +27,12 @@ describe('Errors carrier directive', function() {
      *
      * @returns {*}
      */
-    function getCompiledElem(showClass, labelActive) {
+    function getCompiledElem() {
         var element = angular.element('' +
             '<span class="errors_container"></span>' +
-            '<input class="' +
-                (showClass === true ? 'ng-invalid ng-touched' : '') +
-            '" errors-carrier="errors_container" type="text">' +
-            '<label ' +
-                (showClass === true ? 'class="active"' : '') + '</label>');
+            '<input errors-carrier="errors_container" type="text">'
+        );
+
         var compiledElement = compile(element)(scope);
 
         scope.$digest();
