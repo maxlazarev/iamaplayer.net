@@ -18,7 +18,7 @@ var auth        = {
             res.json({
                 status:     401,
                 error:      0,
-                message:    'Invalid credentials'
+                message:    'Empty credentials'
             });
         }
 
@@ -42,7 +42,7 @@ var auth        = {
                 res.json({
                     status:     401,
                     error:      2,
-                    message:    'Invalid email or password'
+                    message:    'Invalid credentials'
                 });
             }
         }).catch(function(err) {
