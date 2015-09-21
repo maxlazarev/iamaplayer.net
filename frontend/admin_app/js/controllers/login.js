@@ -3,7 +3,7 @@
 adminAppControllers.controller('loginController', [
     '$scope', '$location', 'auth',
     function($scope, $location, auth) {
-
+        $scope.passwordValidity = true;
         /**
          * Send login data
          *
@@ -22,17 +22,23 @@ adminAppControllers.controller('loginController', [
 
         };
 
+        /**
+         * Handles login errors
+         *
+         * @param {obj} error
+         */
         $scope.onAuthenticationError = function(error) {
             switch (error.data.error){
                 case 0:
-                    $scope.form.email.$error.required = true;
-                    $scope.form.password.$error.required = true;
+                    $scope.form.email.$setValidity('required', false);
+                    $scope.form.password.$setValidity('required', false);
                     break;
                 case 1:
-                    $scope.form.email.$error.email = true;
+                    $scope.form.email.$setValidity('email', false);
                     break;
                 case 2:
-                    $scope.form.password.$error.password = true;
+                    $scope.passwordValidity = false;
+                    $scope.form.password.$setValidity('password', false);
                     break;
             }
         };
