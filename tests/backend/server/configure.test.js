@@ -1,6 +1,8 @@
 var app;
+var csrfStub;
 var express     = require('express');
 var configure   = require('../../../server/configure');
+var proxyquire  = require('proxyquire');
 
 /**
  * Checks if a middleware is set up
@@ -21,6 +23,10 @@ function isMiddlewareSet(app, middlewareName) {
 
 describe('Server configurations', function() {
 
+    afterEach(function() {
+        configure = require('../../../server/configure');
+    });
+
     describe('(while using app stub)', function() {
         beforeEach(function() {
             app = {
@@ -30,6 +36,7 @@ describe('Server configurations', function() {
                 use:    sinon.spy(),
                 all:    sinon.stub()
             };
+
             configure(app);
 
         });
@@ -67,6 +74,36 @@ describe('Server configurations', function() {
             expect(isMiddlewareSet(app, 'urlencodedParser')).to.equal(true);
         });
 
+        it('should use "cookieParser" middleware', function() {
+            expect(isMiddlewareSet(app, 'cookieParser')).to.equal(true);
+        });
+
+        it('should use "csrf" middleware', function() {
+            expect(isMiddlewareSet(app, 'csrf')).to.equal(true);
+        });
+
+    });
+
+    describe('(while stubbing csrf())', function() {
+        app = {
+            get:    sinon.spy(),
+            post:   sinon.spy(),
+            set:    sinon.spy(),
+            use:    sinon.spy(),
+            all:    sinon.stub()
+        };
+
+        csrfStub = sinon.spy();
+        proxyquire.preserveCache();
+        configure = proxyquire('../../../server/configure', {
+            'csurf':   csrfStub
+        });
+
+        configure(app);
+
+        it('should set csrf() cookie option to true', function() {
+            expect(csrfStub).to.be.calledWith({cookie: true});
+        });
     });
 
 });

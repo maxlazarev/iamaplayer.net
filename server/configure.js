@@ -4,6 +4,8 @@ var errorHandler    = require('errorhandler');
 var routes          = require('../routes');
 var logger          = require('morgan');
 var bodyParser      = require('body-parser');
+var cookieParser    = require('cookie-parser')
+var csrf            = require('csurf');
 var cors            = require('../middlewares/cors');
 
 /**
@@ -18,10 +20,17 @@ module.exports = function(app) {
     // Setting up middlewares
     app.use(logger('dev'));
     // Parse application/x-www-form-urlencoded
-    app.use(bodyParser.urlencoded({ extended: false }))
+    app.use(bodyParser.urlencoded({ extended: false }));
     // Body-parser middleware
     app.use(bodyParser.json());
-    console.log(path.join(__dirname, '../public'));
+    // Cookies
+    app.use(cookieParser());
+
+    var csrfProtection = csrf({ cookie: true });
+
+    // CSRF protection middleware
+    app.use(csrfProtection);
+
     app.use('/public', express.static(path.join(__dirname, '../public')));
     if ('development' === app.get('env')) {
         app.use(errorHandler());
