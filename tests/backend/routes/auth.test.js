@@ -34,8 +34,9 @@ describe('Auth', function() {
 
             expect(res.status).to.be.calledWith(401);
             expect(res.json).to.be.calledWith({
+                error:      0,
                 status:     401,
-                message:    'Invalid credentials'
+                message:    'Empty credentials'
             });
         });
 
@@ -54,6 +55,7 @@ describe('Auth', function() {
 
             expect(res.status).to.be.calledWith(401);
             expect(res.json).to.be.calledWith({
+                error:      1,
                 status:     401,
                 message:    'Invalid email address'
             });
@@ -142,8 +144,9 @@ describe('Auth', function() {
             return UserStub.findOne().then(function() {
                 expect(res.status).to.be.calledWith(401);
                 expect(res.json).to.be.calledWith({
+                    error:      2,
                     status:     401,
-                    message:    'Invalid email or password'
+                    message:    'Invalid credentials'
                 });
                 done();
             });

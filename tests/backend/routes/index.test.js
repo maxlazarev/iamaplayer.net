@@ -29,19 +29,19 @@ describe('Routes', function() {
         it('handle *', function() {
             expect(app.get).to.be.calledWith('*', sinon.match.func);
             expect(res.sendFile)
-                .to.be.calledWith(constants.DR + '/' +  paths.admin.indexDist);
+                .to.be.calledWith(constants.DR + '/' +  paths.admin.indexDest);
         });
 
         it('handle /admin', function() {
             expect(app.get).to.be.calledWith('/admin', sinon.match.func);
             expect(res.sendFile)
-                .to.be.calledWith(constants.DR + '/' + paths.admin.indexDist);
+                .to.be.calledWith(constants.DR + '/' + paths.admin.indexDest);
         });
 
         it('handle /admin/* ', function() {
             expect(app.get).to.be.calledWith('/admin/*', sinon.match.func);
             expect(res.sendFile)
-                .to.be.calledWith(constants.DR + '/' + paths.front.indexDist);
+                .to.be.calledWith(constants.DR + '/' + paths.front.indexDest);
         });
     });
 
