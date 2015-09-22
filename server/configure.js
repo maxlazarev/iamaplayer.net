@@ -28,9 +28,6 @@ module.exports = function(app) {
 
     var csrfProtection = csrf({ cookie: true });
 
-    // CSRF protection middleware
-    app.use(csrfProtection);
-
     app.use('/public', express.static(path.join(__dirname, '../public')));
     if ('development' === app.get('env')) {
         app.use(errorHandler());
@@ -47,5 +44,7 @@ module.exports = function(app) {
     // Setting up the routes
     routes.initialize(app);
 
+    // CSRF protection middleware
+    app.use(csrfProtection);
     return app;
 };

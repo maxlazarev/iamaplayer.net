@@ -1,5 +1,6 @@
 var app;
 var csrfStub;
+var routesStub;
 var express     = require('express');
 var configure   = require('../../../server/configure');
 var proxyquire  = require('proxyquire');
@@ -85,23 +86,29 @@ describe('Server configurations', function() {
     });
 
     describe('(while stubbing csrf())', function() {
-        app = {
-            get:    sinon.spy(),
-            post:   sinon.spy(),
-            set:    sinon.spy(),
-            use:    sinon.spy(),
-            all:    sinon.stub()
-        };
+        it('should set call crf() and set cookie option to true', function() {
+            app = {
+                get:    sinon.spy(),
+                post:   sinon.spy(),
+                set:    sinon.spy(),
+                use:    sinon.spy(),
+                all:    sinon.stub()
+            };
 
-        csrfStub = sinon.spy();
-        proxyquire.preserveCache();
-        configure = proxyquire('../../../server/configure', {
-            'csurf':   csrfStub
-        });
+            csrfStub = sinon.spy();
+            routesStub = {
+                initialize: sinon.spy()
+            };
 
-        configure(app);
+            proxyquire.preserveCache();
+            configure = proxyquire('../../../server/configure', {
+                csurf:          csrfStub,
+                '../routes':    routesStub
+            });
 
-        it('should set csrf() cookie option to true', function() {
+            configure(app);
+
+            expect(app.use).to.be.calledAfter(routesStub.initialize);
             expect(csrfStub).to.be.calledWith({cookie: true});
         });
     });
