@@ -1,7 +1,19 @@
-'user strict';
+(function() {
+    'user strict';
 
-adminAppControllers.controller('indexController',
-    ['$scope', '$location', function($scope, $location, $rootElement) {
+    angular
+        .module('adminApp')
+        .controller('indexController', indexController);
 
-    }]
-);
+    /**
+     * indexController
+     *
+     * @param {obj} $scope
+     * @param {obj} $location
+     * @param {obj} $rootElement
+     */
+    function indexController($scope, $location, $rootElement) {
+
+    }
+
+})();

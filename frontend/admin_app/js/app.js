@@ -1,11 +1,16 @@
-var adminApp = angular.module('adminApp', [
-    'ngRoute',
-    'ngAnimate',
-    'adminAppControllers',
-    'adminAppDirectives'
-]);
+angular
+    .module('adminApp', [
+        'ngRoute',
+        'ngAnimate'
+    ])
+    .config(['$routeProvider', appConfig]);
 
-adminApp.config(['$routeProvider', function($routeProvider) {
+/**
+ * Sets application configs
+ *
+ * @param {obj} $routeProvider
+ */
+function appConfig($routeProvider) {
     /**
      * Setting routes
      */
@@ -16,8 +21,4 @@ adminApp.config(['$routeProvider', function($routeProvider) {
         templateUrl:    'templates/index.tpl.html',
         controller:     'indexController'
     });
-
-}]);
-
-var adminAppControllers = angular.module('adminAppControllers', []);
-var adminAppDirectives = angular.module('adminAppDirectives', []);
+}

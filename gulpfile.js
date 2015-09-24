@@ -91,6 +91,7 @@ function createDevelopmentScriptsTask(appName, paths) {
         return gulp.src(paths.vendorJs.concat(paths.jsSrc, paths.tplSrc))
             .pipe(plugins.debug())
             .pipe(plugins.if(/html$/, buildTemplates()))
+            .pipe(plugins.ngAnnotate())
             .pipe(plugins.sourcemaps.init())
             .pipe(plugins.concat('app.js'))
             .pipe(plugins.sourcemaps.write('.'))
