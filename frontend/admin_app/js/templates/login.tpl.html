@@ -1,5 +1,7 @@
-<div class="row">
-    <form name="form" novalidate ng-controller="loginController" ng-submit="login()" class="col s12 offset-s0 m6 offset-m3 admin_login_form">
+<div class="row" ng-controller="loginController as wm">
+    <form name="wm.form" novalidate
+          ng-submit="wm.login()"
+          class="col s12 offset-s0 m6 offset-m3 admin_login_form">
         <h4 class="light valign admin_logo">
             <a class="admin_logo_link" href="/admin/#index">
                 <i class="admin_logo icon-logo_43x43"></i>
@@ -12,14 +14,14 @@
         <div class="row valign margin_bottom_10">
             <div class="input-field offset-s2 col s8 light">
                 <span class="errors_container hide-on-med-and-down">
-                    <span class="ng-error-text" ng-show="form.email.$error.required">
+                    <span class="ng-error-text" ng-show="wm.form.email.$error.required">
                         Email адрес нам необходим!
                     </span>
-                    <span class="ng-error-text" ng-show="form.email.$error.email">
+                    <span class="ng-error-text" ng-show="wm.form.email.$error.email">
                         Нет, это не верный Email адрес!
                     </span>
                 </span>
-                <input required ng-model="data.email"
+                <input required ng-model="wm.data.email"
                    errors-carrier="errors_container"
                    name="email"
                    id="email"
@@ -30,14 +32,14 @@
         <div class="row valign margin_bottom_10">
             <div class="input-field offset-s2 col s8 light">
                 <span class="errors_container hide-on-med-and-down">
-                    <span class="ng-error-text" ng-show="form.password.$error.required">
-                        Пароль нам <span ng-show="form.email.$error.required">тоже</span> необходим!
+                    <span class="ng-error-text" ng-show="wm.form.password.$error.required">
+                        Пароль нам <span ng-show="wm.form.email.$error.required">тоже</span> необходим!
                     </span>
-                    <span class="ng-error-text" ng-show="form.password.$error.password">
+                    <span class="ng-error-text" ng-show="wm.form.password.$error.password">
                         Нет, это не верный пароль!
                     </span>
                 </span>
-                <input required ng-model="data.password"
+                <input required ng-model="wm.data.password"
                    errors-carrier="errors_container"
                    password-checker=""
                    name="password" id="password"
