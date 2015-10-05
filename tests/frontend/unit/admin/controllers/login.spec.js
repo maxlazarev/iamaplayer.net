@@ -6,6 +6,8 @@ describe('loginController', function() {
     var $scope = {};
     var authMock;
     var controller;
+    var $cookies;
+    var $location;
 
     beforeEach(function() {
         module('adminApp');
@@ -14,9 +16,13 @@ describe('loginController', function() {
             login: function() {}
         };
 
-        inject(function($rootScope, _$controller_) {
+        inject(function($rootScope, _$controller_, _$cookies_, _$location_) {
             $controller = _$controller_;
+            $cookies = _$cookies_;
+            $location = _$location_;
         });
+
+        spyOn($location, 'path').and.callThrough();
 
         controller = $controller('loginController', {
             auth: authMock
@@ -118,10 +124,24 @@ describe('loginController', function() {
             expect(controller.onAuthenticationSuccess).toBeDefined();
         });
 
-        it('should save data to localstorage', function() {
+        it('should save data to cookies', function() {
             var success = {
+                data: {
+                    expires:    'TIMESTAMP',
+                    token:      'TOKEN_STRING',
+                    user:       {
+                        username: 'username',
+                        'role':   1
 
+                    }
+                }
             };
+            controller.onAuthenticationSuccess(success);
+            expect($cookies.get('token')).toEqual('TOKEN_STRING');
+            expect($cookies.get('username')).toEqual('username');
+            expect($cookies.get('role')).toEqual('1');
+            expect($location.path).toHaveBeenCalledWith('/admin/pages');
+
         });
     });
 });

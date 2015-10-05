@@ -11,15 +11,14 @@
      * @param {obj} $location
      * @param {obj} auth
      */
-    function loginController($location, auth) {
+    function loginController($location, $cookies, $location, auth) {
         /* jscs validthis: true */
-        var vm = this;
-        console.log(vm);
+        var _this = this;
 
-        vm.passwordValidity = true;
-        vm.login = login;
-        vm.onAuthenticationSuccess = onAuthenticationSuccess;
-        vm.onAuthenticationError = onAuthenticationError;
+        _this.passwordValidity = true;
+        _this.login = login;
+        _this.onAuthenticationSuccess = onAuthenticationSuccess;
+        _this.onAuthenticationError = onAuthenticationError;
 
         /**
          * Send login data
@@ -27,17 +26,19 @@
          * @returns {bool}
          */
         function login() {
-            console.log(vm);
-            if (vm.form.$valid === true) {
-                auth.login(vm.data,
-                    vm.onAuthenticationSuccess, vm.onAuthenticationError);
+            if (_this.form.$valid === true) {
+                auth.login(_this.data,
+                    _this.onAuthenticationSuccess, _this.onAuthenticationError);
             } else {
                 return false;
             }
         }
 
         function onAuthenticationSuccess(success) {
-
+            $cookies.put('username', success.data.user.username);
+            $cookies.put('role', success.data.user.role);
+            $cookies.put('token', success.data.token);
+            $location.path('/admin/pages');
         }
 
         /**
@@ -48,15 +49,15 @@
         function onAuthenticationError(error) {
             switch (error.data.error){
                 case 0:
-                    vm.form.email.$setValidity('required', false);
-                    vm.form.password.$setValidity('required', false);
+                    _this.form.email.$setValidity('required', false);
+                    _this.form.password.$setValidity('required', false);
                     break;
                 case 1:
-                    vm.form.email.$setValidity('email', false);
+                    _this.form.email.$setValidity('email', false);
                     break;
                 case 2:
-                    vm.passwordValidity = false;
-                    vm.form.password.$setValidity('password', false);
+                    _this.passwordValidity = false;
+                    _this.form.password.$setValidity('password', false);
                     break;
             }
         }

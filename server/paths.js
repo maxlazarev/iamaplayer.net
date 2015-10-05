@@ -1,5 +1,12 @@
 var rootDir = 'frontend';
-bc = rootDir + '/bower_components';
+var bc = rootDir + '/bower_components';
+var vendorJs = [
+    bc + '/angular/angular.js',
+    bc + '/ngstorage/ngStorage.js',
+    bc + '/angular-animate/angular-animate.js',
+    bc + '/angular-route/angular-route.js',
+    bc + '/angular-cookies/angular-cookies.js'
+];
 
 module.exports = {
     front: {
@@ -14,12 +21,7 @@ module.exports = {
         indexSrc:   rootDir + '/app/index.html',
         spriteSrc:  rootDir + '/app/sprite_src/*',
         tplSrc:     rootDir + '/app/js/**/*.tpl.html',
-        vendorJs:   [
-            bc + '/angular/angular.js',
-            bc + '/ngstorage/ngStorage.js',
-            bc + '/angular-animate/angular-animate.js',
-            bc + '/angular-route/angular-route.js'
-        ],
+        vendorJs:   vendorJs,
 
         /**
          * Destinations
@@ -44,12 +46,7 @@ module.exports = {
         indexSrc:   rootDir + '/admin_app/index.html',
         spriteSrc:  rootDir + '/admin_app/sprite_src/*',
         tplSrc:     rootDir + '/admin_app/js/**/*.tpl.html',
-        vendorJs:   [
-            bc + '/angular/angular.js',
-            bc + '/ngstorage/ngStorage.js',
-            bc + '/angular-animate/angular-animate.js',
-            bc + '/angular-route/angular-route.js'
-        ],
+        vendorJs:   vendorJs,
 
         /**
          * Destinations

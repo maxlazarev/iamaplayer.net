@@ -1,7 +1,8 @@
 angular
     .module('adminApp', [
         'ngRoute',
-        'ngAnimate'
+        'ngAnimate',
+        'ngCookies'
     ])
     .config(['$routeProvider', appConfig]);
 
