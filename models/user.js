@@ -7,7 +7,7 @@ var UserSchema      = new Schema({
         type:       String,
         validate:   [validator.isEmail, 'Invalid email adress!']
     },
-    password:   { type: String },
+    password:   { type: String, select: false },
     role:       { type: Number, default: 0 },
     firstName:  { type: String },
     lastName:   { type: String },
