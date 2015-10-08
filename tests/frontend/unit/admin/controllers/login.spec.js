@@ -2,8 +2,6 @@
 
 describe('loginController', function() {
     var $controller;
-    var $auth;
-    var $scope = {};
     var authMock;
     var controller;
     var $cookies;
@@ -41,7 +39,7 @@ describe('loginController', function() {
         };
     });
 
-    describe('$scope.login method', function() {
+    describe('login method', function() {
         it('should exist', function() {
             expect(controller.login).toBeDefined();
         });
@@ -67,7 +65,29 @@ describe('loginController', function() {
 
     });
 
-    describe('$scope.onAuthenticationError method', function() {
+    describe('logout method', function() {
+        it('should exist', function() {
+            expect(controller.logout).toBeDefined();
+        });
+
+        it('should delete cookies', function() {
+            $cookies.put('username', 'username');
+            $cookies.put('role', 'god');
+            $cookies.put('token', 'A_TOKEN_STRING');
+
+            controller.logout();
+            expect($cookies.get('username')).toBeUndefined();
+            expect($cookies.get('role')).toBeUndefined();
+            expect($cookies.get('token')).toBeUndefined();
+        });
+
+        it('should redirect', function() {
+            controller.logout();
+            expect($location.path).toHaveBeenCalledWith('/');
+        });
+    });
+
+    describe('onAuthenticationError method', function() {
         beforeEach(function() {
             spyOn(controller.form.email, '$setValidity').and.callThrough();
             spyOn(controller.form.password, '$setValidity').and.callThrough();
@@ -136,11 +156,15 @@ describe('loginController', function() {
                     }
                 }
             };
+
+            $cookies.remove('token');
+            $cookies.remove('username');
+            $cookies.remove('role');
             controller.onAuthenticationSuccess(success);
             expect($cookies.get('token')).toEqual('TOKEN_STRING');
             expect($cookies.get('username')).toEqual('username');
             expect($cookies.get('role')).toEqual('1');
-            expect($location.path).toHaveBeenCalledWith('/admin/pages');
+            expect($location.path).toHaveBeenCalledWith('index');
 
         });
     });

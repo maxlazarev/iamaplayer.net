@@ -17,6 +17,7 @@
 
         _this.passwordValidity = true;
         _this.login = login;
+        _this.logout = logout;
         _this.onAuthenticationSuccess = onAuthenticationSuccess;
         _this.onAuthenticationError = onAuthenticationError;
 
@@ -34,11 +35,21 @@
             }
         }
 
+        /**
+         * Logout
+         */
+        function logout() {
+            $cookies.remove('username');
+            $cookies.remove('role');
+            $cookies.remove('token');
+            $location.path('/');
+        }
+
         function onAuthenticationSuccess(success) {
             $cookies.put('username', success.data.user.username);
             $cookies.put('role', success.data.user.role);
             $cookies.put('token', success.data.token);
-            $location.path('/admin/pages');
+            $location.path('index');
         }
 
         /**
