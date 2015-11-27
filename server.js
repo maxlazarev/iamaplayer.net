@@ -7,10 +7,10 @@ var app;
 app = express();
 app = config(app);
 
-mongoose.connect('mongodb://localhost/iamaplayer');
+/*mongoose.connect('mongodb://localhost/iamaplayer');
 mongoose.connection.on('open', function() {
     console.log('Mongoose connected');
-});
+});*/
 
 app.listen(app.get('port'), function(err) {
     if (err) {
